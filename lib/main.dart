@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:logic_app/views/screen/HomePage.dart';
 import 'package:logic_app/views/screen/LoginPage.dart';
 import 'package:logic_app/views/screen/TaskOne.dart';
+import 'package:logic_app/views/screen/TaskThree.dart';
 import 'package:logic_app/views/screen/TaskTwo.dart';
 
 void main() {
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
         '/' : (context) => const HomePage(),
         'Task1' : (context) => const TaskOne(),
         'Task2' : (context) => const TaskTwo(),
+        'Task3' : (context) => const TaskThree(),
       },
 
     );
