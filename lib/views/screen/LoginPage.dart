@@ -98,7 +98,9 @@ class _LoginPageState extends State<LoginPage> {
               Align(
                 alignment: Alignment.centerRight,
                 child: CustomTextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/');
+                  },
                   text: 'Forget Password?',
                 ),
               ),

@@ -15,6 +15,14 @@ class _TaskTwoState extends State<TaskTwo> {
   bool showOdd = false;
   bool showEven = false;
 
+  void updateNumbersToShow(int enteredNumber) {
+    if (enteredNumber != null && enteredNumber <= 100) {
+      numbersToShow = allNumbers.sublist(0, enteredNumber);
+    } else {
+      numbersToShow = [];
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,11 +56,6 @@ class _TaskTwoState extends State<TaskTwo> {
                     onChanged: (value) {
                       setState(() {
                         int? entered = int.tryParse(value);
-                        if (entered != null && entered <= 100) {
-                          numbersToShow = allNumbers.sublist(0, entered);
-                        } else {
-                          numbersToShow = [];
-                        }
                       });
                     },
                   ),
@@ -86,22 +89,26 @@ class _TaskTwoState extends State<TaskTwo> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           FloatingActionButton(
+            mini: true,
             onPressed: () {
               setState(() {
                 showOdd = true;
                 showEven = false;
-                numbersToShow = allNumbers.takeWhile((num) => num <= int.parse(_textFieldController.text)).where((num) => num % 2 != 0).toList();
+                updateNumbersToShow(int.parse(_textFieldController.text));
+                numbersToShow = numbersToShow.where((num) => num % 2 != 0).toList();
               });
             },
             child: const Text("Odd"),
           ),
           const SizedBox(width: 20,),
           FloatingActionButton(
+            mini: true,
             onPressed: () {
               setState(() {
                 showOdd = false;
                 showEven = true;
-                numbersToShow = allNumbers.takeWhile((num) => num <= int.parse(_textFieldController.text)).where((num) => num % 2 == 0).toList();
+                updateNumbersToShow(int.parse(_textFieldController.text));
+                numbersToShow = numbersToShow.where((num) => num % 2 == 0).toList();
               });
             },
             child: const Text("Even"),
