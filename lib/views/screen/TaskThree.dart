@@ -9,7 +9,7 @@ class TaskThree extends StatefulWidget {
 }
 
 class _TaskThreeState extends State<TaskThree> {
-  TextEditingController _textFieldController = TextEditingController();
+  final TextEditingController _textFieldController = TextEditingController();
   List<String> items = [];
 
   @override
@@ -34,7 +34,9 @@ class _TaskThreeState extends State<TaskThree> {
                 border: OutlineInputBorder(),
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(
+              height: 20,
+            ),
             Expanded(
               child: ListView.builder(
                 itemCount: items.length,
@@ -47,7 +49,7 @@ class _TaskThreeState extends State<TaskThree> {
                     child: ListTile(
                       title: Text(
                         items[index],
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -62,11 +64,19 @@ class _TaskThreeState extends State<TaskThree> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           setState(() {
-            items.add(_textFieldController.text);
+            String newStatement = _textFieldController.text;
+            if (!items.contains(newStatement)) {
+              items.add(newStatement);
+            } else {
+              items.remove(newStatement);
+              items.add(newStatement);
+            }
             _textFieldController.clear();
           });
         },
-        child: const Icon(Icons.add),
+        child: const Icon(
+          Icons.add,
+        ),
       ),
     );
   }

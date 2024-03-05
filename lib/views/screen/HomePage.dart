@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:logic_app/views/utils/ListUtils.dart';
+import 'package:logic_app/views/utils/VariableUtils.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -9,7 +11,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,6 +21,19 @@ class _HomePageState extends State<HomePage> {
             fontWeight: FontWeight.bold,
           ),
         ),
+        actions: [
+          IconButton(
+            onPressed: () async {
+              var prefs = await SharedPreferences.getInstance();
+              prefs.setBool(UserKey, false);
+              Navigator.of(context)
+                  .pushNamedAndRemoveUntil('LoginPage', (route) => false);
+            },
+            icon: const Icon(
+              Icons.exit_to_app,
+            ),
+          ),
+        ],
       ),
       body: Center(
         child: Column(

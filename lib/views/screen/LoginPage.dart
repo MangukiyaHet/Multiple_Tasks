@@ -2,8 +2,10 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:logic_app/components/LoginPageComponents.dart';
-import 'package:logic_app/helper/ApiHelper.dart';
+import 'package:logic_app/helper/LoginAPIHelper.dart';
 import 'package:logic_app/views/utils/ImageUtils.dart';
+import 'package:logic_app/views/utils/VariableUtils.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -13,6 +15,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _shakeKey = GlobalKey<ShakeWidgetState>();
   final TextEditingController _usernameController = TextEditingController();
@@ -24,11 +28,15 @@ class _LoginPageState extends State<LoginPage> {
     String version = 'app';
     String from = 'app';
 
-    Map<String, dynamic> response = await APIHelper.apiHelper.fetchPassword(email, password, version, from);
+    Map? response = await APIHelper.apiHelper.fetchPassword(email, password, version, from);
 
     if (response != null && response.containsKey('success')) {
       if (response['success'] == 1) {
         log('Authentication successful: $response');
+        String ApiToken = response['token'];
+        var prefs = await SharedPreferences.getInstance();
+        prefs.setString(TokenKey, ApiToken);
+        prefs.setBool(UserKey, true);
         Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
       } else {
         log('Authentication failed');
@@ -52,7 +60,10 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

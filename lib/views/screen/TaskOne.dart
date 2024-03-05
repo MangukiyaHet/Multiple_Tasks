@@ -11,6 +11,8 @@ class TaskOne extends StatefulWidget {
 class _TaskOneState extends State<TaskOne> {
   TextEditingController _textFieldController = TextEditingController();
   int? enteredNumber;
+  int Pressed = 1;
+  int? newVal;
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +45,8 @@ class _TaskOneState extends State<TaskOne> {
                       border: OutlineInputBorder(),
                     ),
                     onChanged: (value) {
-                      setState(() {
-                        enteredNumber = int.tryParse(value);
-                      });
+                      enteredNumber = int.tryParse(value);
+                      newVal = (newVal ?? 0) + enteredNumber!;
                     },
                   ),
                 ),
@@ -55,10 +56,8 @@ class _TaskOneState extends State<TaskOne> {
                   child: ElevatedButton(
                     onPressed: () {
                       setState(() {
-                        if (enteredNumber != null && enteredNumber! < 100) {
-                          enteredNumber = enteredNumber! + 1;
-                          _textFieldController.text = enteredNumber.toString();
-                        }
+                        Pressed++;
+                        _textFieldController.clear();
                       });
                     },
                     child: const Icon(Icons.add),
@@ -72,7 +71,7 @@ class _TaskOneState extends State<TaskOne> {
             if (enteredNumber != null)
               Expanded(
                 child: ListView.builder(
-                  itemCount: enteredNumber!,
+                  itemCount: newVal,
                   itemBuilder: (BuildContext context, int index) {
                     return Container(
                       margin: const EdgeInsets.symmetric(vertical: 4.0),
