@@ -23,4 +23,10 @@ final List<Map<String, dynamic>> Tasks = [
     'number': '4',
     'routeName': 'Task4',
   },
+  {
+    'title': 'Task 5 1D Array',
+    'date': '05/03/2024',
+    'number': '5',
+    'routeName': 'Task5',
+  },
 ];
